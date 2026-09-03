@@ -7,56 +7,56 @@
 <meta name="description" content="〇〇サイクルの営業状況・営業時間・アクセス・豆知識のご案内ページです。">
 <style>
   :root {
-    --ink: #1c1a17;
-    --paper: #f5f2ea;
+    --ink: #201d18;
+    --paper: #faf7f0;
     --surface: #ffffff;
-    --line: #ddd7c8;
-    --muted: #756d5d;
-    --accent: #cf4f1c;
-    --accent-ink: #fff9f4;
-    --open: #276b45;
-    --open-bg: #e4f0e6;
-    --offhours: #9c6a12;
-    --offhours-bg: #f4ecd8;
-    --closed: #a53628;
-    --closed-bg: #f3e3de;
-    --shadow: 0 1px 2px rgba(28, 26, 23, 0.04), 0 8px 20px -12px rgba(28, 26, 23, 0.18);
+    --line: #e6dfcf;
+    --muted: #7d7462;
+    --accent: #e35a1f;
+    --accent-ink: #fff8f2;
+    --open: #1f8a4c;
+    --open-bg: #dff4e6;
+    --offhours: #b3690a;
+    --offhours-bg: #fbead2;
+    --closed: #c2412f;
+    --closed-bg: #fbe3dd;
+    --shadow: 0 1px 2px rgba(32, 29, 24, 0.05), 0 10px 24px -14px rgba(32, 29, 24, 0.22);
   }
 
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --ink: #f1ece1;
-      --paper: #18160f;
-      --surface: #221f18;
-      --line: #3a3527;
-      --muted: #a89d84;
-      --accent: #ff8144;
-      --accent-ink: #1a1108;
-      --open: #6fce93;
-      --open-bg: #1c3527;
-      --offhours: #e6b355;
-      --offhours-bg: #3a2f14;
-      --closed: #ff8a78;
-      --closed-bg: #3c211d;
-      --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px -12px rgba(0, 0, 0, 0.5);
+      --ink: #f5f0e6;
+      --paper: #2b261c;
+      --surface: #362f23;
+      --line: #4a412f;
+      --muted: #b8ac95;
+      --accent: #ff9152;
+      --accent-ink: #241207;
+      --open: #7ad9a0;
+      --open-bg: #1f3c2c;
+      --offhours: #ffc169;
+      --offhours-bg: #46341a;
+      --closed: #ff9683;
+      --closed-bg: #46261f;
+      --shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 10px 28px -14px rgba(0, 0, 0, 0.55);
     }
   }
 
   :root[data-theme="dark"] {
-    --ink: #f1ece1;
-    --paper: #18160f;
-    --surface: #221f18;
-    --line: #3a3527;
-    --muted: #a89d84;
-    --accent: #ff8144;
-    --accent-ink: #1a1108;
-    --open: #6fce93;
-    --open-bg: #1c3527;
-    --offhours: #e6b355;
-    --offhours-bg: #3a2f14;
-    --closed: #ff8a78;
-    --closed-bg: #3c211d;
-    --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px -12px rgba(0, 0, 0, 0.5);
+    --ink: #f5f0e6;
+    --paper: #2b261c;
+    --surface: #362f23;
+    --line: #4a412f;
+    --muted: #b8ac95;
+    --accent: #ff9152;
+    --accent-ink: #241207;
+    --open: #7ad9a0;
+    --open-bg: #1f3c2c;
+    --offhours: #ffc169;
+    --offhours-bg: #46341a;
+    --closed: #ff9683;
+    --closed-bg: #46261f;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 10px 28px -14px rgba(0, 0, 0, 0.55);
   }
 
   * { box-sizing: border-box; }
@@ -140,26 +140,41 @@
   .status-card[data-state="offhours"] { background: var(--offhours-bg); color: var(--offhours); }
   .status-card[data-state="closed"] { background: var(--closed-bg); color: var(--closed); }
 
-  .status-row {
+  .status-card {
+    align-items: center;
+    text-align: center;
+  }
+
+  .status-clock {
+    margin: 0;
+    font-variant-numeric: tabular-nums;
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    opacity: 0.7;
+  }
+
+  .status-headline {
     display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 12px;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .status-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: currentColor;
+    flex-shrink: 0;
   }
 
   .status-label {
     font-family: "Zen Kaku Gothic New", "Noto Sans JP", sans-serif;
     font-weight: 900;
-    font-size: 26px;
+    font-size: 34px;
+    line-height: 1.1;
     letter-spacing: 0.01em;
-  }
-
-  .status-clock {
-    font-variant-numeric: tabular-nums;
-    font-size: 15px;
-    font-weight: 500;
-    opacity: 0.85;
-    white-space: nowrap;
   }
 
   .status-detail {
@@ -307,9 +322,10 @@
   </header>
 
   <section class="status-card" id="statusCard" data-state="open">
-    <div class="status-row">
+    <p class="status-clock" id="statusClock">14:32 現在</p>
+    <div class="status-headline">
+      <span class="status-dot" aria-hidden="true"></span>
       <span class="status-label" id="statusLabel">営業中</span>
-      <span class="status-clock" id="statusClock">14:32</span>
     </div>
     <p class="status-detail" id="statusDetail">本日 9:00〜18:30 で営業しています</p>
   </section>
@@ -410,7 +426,7 @@
       card.setAttribute("data-state", status.state);
       document.getElementById("statusLabel").textContent = status.label;
       document.getElementById("statusDetail").textContent = status.detail;
-      document.getElementById("statusClock").textContent = pad(now.getHours()) + ":" + pad(now.getMinutes());
+      document.getElementById("statusClock").textContent = pad(now.getHours()) + ":" + pad(now.getMinutes()) + " 現在";
 
       var dayIndex = now.getDay(); // 0 Sun .. 6 Sat, table rows order Mon..Sun
       var rowOrder = [1, 2, 3, 4, 5, 6, 0];
