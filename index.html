@@ -4,440 +4,468 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>〇〇サイクル | 自転車店の営業案内</title>
-<meta name="description" content="〇〇サイクルの営業状況・営業時間・アクセス・豆知識のご案内ページです。">
+<meta name="description" content="〇〇サイクルの営業状況・営業時間・定休日・アクセス・豆知識のご案内ページです。">
+<meta name="theme-color" content="#123047">
+<meta name="color-scheme" content="light">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@500;700;900&family=Noto+Sans+JP:wght@400;500;700&family=Roboto+Mono:wght@400;500;700&display=swap">
+
 <style>
   :root {
-    --ink: #201d18;
-    --paper: #faf7f0;
-    --surface: #ffffff;
-    --line: #e6dfcf;
-    --muted: #7d7462;
-    --accent: #e35a1f;
-    --accent-ink: #fff8f2;
-    --open: #1f8a4c;
-    --open-bg: #dff4e6;
-    --offhours: #b3690a;
-    --offhours-bg: #fbead2;
-    --closed: #c2412f;
-    --closed-bg: #fbe3dd;
-    --shadow: 0 1px 2px rgba(32, 29, 24, 0.05), 0 10px 24px -14px rgba(32, 29, 24, 0.22);
-  }
-
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --ink: #f5f0e6;
-      --paper: #2b261c;
-      --surface: #362f23;
-      --line: #4a412f;
-      --muted: #b8ac95;
-      --accent: #ff9152;
-      --accent-ink: #241207;
-      --open: #7ad9a0;
-      --open-bg: #1f3c2c;
-      --offhours: #ffc169;
-      --offhours-bg: #46341a;
-      --closed: #ff9683;
-      --closed-bg: #46261f;
-      --shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 10px 28px -14px rgba(0, 0, 0, 0.55);
-    }
-  }
-
-  :root[data-theme="dark"] {
-    --ink: #f5f0e6;
-    --paper: #2b261c;
-    --surface: #362f23;
-    --line: #4a412f;
-    --muted: #b8ac95;
-    --accent: #ff9152;
-    --accent-ink: #241207;
-    --open: #7ad9a0;
-    --open-bg: #1f3c2c;
-    --offhours: #ffc169;
-    --offhours-bg: #46341a;
-    --closed: #ff9683;
-    --closed-bg: #46261f;
-    --shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 10px 28px -14px rgba(0, 0, 0, 0.55);
+    --navy: #123047;
+    --navy-deep: #0E2739;
+    --gold: #F2B705;
+    --paper: #F7F6F2;
+    --surface: #FFFFFF;
+    --ink: #16202B;
+    --muted: #5B6672;
+    --line: #E7E4DC;
+    --dot: #DDD9CF;
+    --tip-bg: #FFFDF5;
+    --tip-line: #EFE3BF;
+    --charcoal: #2C3138;
+    --charcoal-line: #8B929A;
   }
 
   * { box-sizing: border-box; }
+
+  html { -webkit-text-size-adjust: 100%; }
 
   body {
     margin: 0;
     background: var(--paper);
     color: var(--ink);
     font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", sans-serif;
+    line-height: 1.7;
     -webkit-font-smoothing: antialiased;
   }
 
   .page {
     max-width: 460px;
     margin: 0 auto;
-    padding: 28px 20px 56px;
-    display: flex;
-    flex-direction: column;
-    gap: 28px;
+    background: var(--paper);
   }
 
-  header.hero {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    padding-top: 8px;
+  /* ---------- 看板（営業状態） ---------- */
+  .board {
+    background: var(--navy);
+    color: #FFFFFF;
+    padding: 22px 20px 26px;
+    border-bottom: 4px solid var(--gold);
+    text-align: center;
+  }
+  .board[data-state="offhours"],
+  .board[data-state="closed"] {
+    background: var(--charcoal);
+    border-bottom-color: var(--charcoal-line);
   }
 
-  .eyebrow {
-    margin: 0;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    color: var(--accent);
-    text-transform: uppercase;
-  }
-
-  h1 {
+  .shop-name {
     margin: 0;
     font-family: "Zen Kaku Gothic New", "Noto Sans JP", sans-serif;
-    font-weight: 900;
-    font-size: 32px;
-    line-height: 1.15;
-    letter-spacing: 0.01em;
-    text-wrap: balance;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.12em;
+    color: var(--gold);
+  }
+  .board[data-state="offhours"] .shop-name,
+  .board[data-state="closed"] .shop-name { color: #D7DCE1; }
+
+  .board-en {
+    margin: 18px 0 0;
+    font-family: "Roboto Mono", monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.34em;
+    text-indent: 0.34em;
+    opacity: 0.72;
   }
 
-  .tagline {
+  .board-label {
     margin: 2px 0 0;
-    color: var(--muted);
-    font-size: 14.5px;
+    font-family: "Zen Kaku Gothic New", "Noto Sans JP", sans-serif;
+    font-weight: 900;
+    font-size: 44px;
+    line-height: 1.1;
+    letter-spacing: 0.04em;
+    text-indent: 0.04em;
+  }
+
+  .board-detail {
+    margin: 10px 0 0;
+    font-size: 13.5px;
+    color: #CFE0EC;
     line-height: 1.6;
   }
+  .board[data-state="offhours"] .board-detail,
+  .board[data-state="closed"] .board-detail { color: #C4CAD1; }
+  .board-detail b {
+    font-family: "Roboto Mono", monospace;
+    font-weight: 700;
+    color: #FFFFFF;
+  }
 
-  section.card, footer {
+  .board-clock {
+    margin: 12px 0 0;
+    font-family: "Roboto Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    opacity: 0.6;
+  }
+
+  /* ---------- セクション共通 ---------- */
+  .sec {
     background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: 14px;
+    border-bottom: 1px solid var(--line);
     padding: 20px;
   }
 
   h2 {
     margin: 0 0 14px;
     font-family: "Zen Kaku Gothic New", "Noto Sans JP", sans-serif;
-    font-size: 15px;
-    font-weight: 700;
-    letter-spacing: 0.02em;
-  }
-
-  /* status card */
-  .status-card {
-    border-radius: 16px;
-    padding: 22px 20px;
-    box-shadow: var(--shadow);
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    transition: background-color 0.2s ease, color 0.2s ease;
-  }
-  .status-card[data-state="open"] { background: var(--open-bg); color: var(--open); }
-  .status-card[data-state="offhours"] { background: var(--offhours-bg); color: var(--offhours); }
-  .status-card[data-state="closed"] { background: var(--closed-bg); color: var(--closed); }
-
-  .status-card {
-    align-items: center;
-    text-align: center;
-  }
-
-  .status-clock {
-    margin: 0;
-    font-variant-numeric: tabular-nums;
-    font-size: 12.5px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    opacity: 0.7;
-  }
-
-  .status-headline {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-  }
-
-  .status-dot {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: currentColor;
-    flex-shrink: 0;
-  }
-
-  .status-label {
-    font-family: "Zen Kaku Gothic New", "Noto Sans JP", sans-serif;
-    font-weight: 900;
-    font-size: 34px;
-    line-height: 1.1;
-    letter-spacing: 0.01em;
-  }
-
-  .status-detail {
-    margin: 0;
-    color: var(--ink);
     font-size: 14px;
-    line-height: 1.5;
+    font-weight: 900;
+    letter-spacing: 0.06em;
+    border-left: 4px solid var(--gold);
+    padding-left: 9px;
+    line-height: 1.4;
   }
 
-  /* hours table */
-  table.hours {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 14.5px;
+  /* ---------- 営業時間 ---------- */
+  .hours-main {
+    margin: 0;
+    font-family: "Roboto Mono", monospace;
+    font-weight: 700;
+    font-size: clamp(28px, 8.6vw, 34px);
+    letter-spacing: 0.01em;
+    text-align: center;
+    padding: 6px 0 4px;
   }
-  table.hours td {
-    padding: 7px 0;
-    border-top: 1px solid var(--line);
-  }
-  table.hours tr:first-child td { border-top: none; }
-  table.hours td:first-child {
-    color: var(--muted);
-    width: 5em;
-  }
-  table.hours td:last-child {
-    text-align: right;
-    font-variant-numeric: tabular-nums;
-  }
-  table.hours tr[data-off="true"] td:last-child {
-    color: var(--muted);
-  }
-  .hours-note {
-    margin: 14px 0 0;
-    padding-top: 12px;
-    border-top: 1px solid var(--line);
+  .hours-sub {
+    margin: 6px 0 0;
+    text-align: center;
     font-size: 13px;
     color: var(--muted);
-    line-height: 1.6;
   }
 
-  /* map */
-  .map-box {
-    border: 1px dashed var(--line);
-    border-radius: 10px;
-    padding: 22px 16px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    text-align: center;
-    color: var(--muted);
-  }
-  .map-box svg { flex-shrink: 0; }
-  .map-address {
+  /* ---------- 定休日 ---------- */
+  .off-list {
     margin: 0;
-    color: var(--ink);
-    font-size: 14.5px;
-    font-weight: 500;
-    line-height: 1.6;
-  }
-  .map-note {
-    margin: 12px 0 0;
-    font-size: 12.5px;
-    color: var(--muted);
-    line-height: 1.6;
-  }
-
-  /* tips */
-  .tips-section h2 { padding: 0 2px; }
-  .tips-grid {
+    padding: 0;
+    list-style: none;
     display: flex;
     flex-direction: column;
     gap: 10px;
   }
-  .tip-card {
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    padding: 15px 16px;
+  .off-item {
     display: flex;
+    align-items: center;
     gap: 12px;
-    align-items: flex-start;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    padding: 11px 13px;
   }
-  .tip-tag {
-    flex-shrink: 0;
-    font-family: "Zen Kaku Gothic New", "Noto Sans JP", sans-serif;
-    font-size: 12px;
+  .off-tag {
+    flex: none;
+    font-size: 11px;
     font-weight: 700;
-    color: var(--accent-ink);
-    background: var(--accent);
-    border-radius: 6px;
-    padding: 4px 8px;
-    letter-spacing: 0.02em;
-    white-space: nowrap;
+    letter-spacing: 0.04em;
+    color: #FFFFFF;
+    background: var(--navy);
+    padding: 3px 8px;
   }
-  .tip-text {
-    margin: 2px 0 0;
-    font-size: 14px;
-    line-height: 1.65;
+  .off-text {
+    font-family: "Zen Kaku Gothic New", "Noto Sans JP", sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 1.4;
   }
-
-  footer {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
+  .next-off {
+    margin: 12px 0 0;
+    padding-top: 12px;
+    border-top: 1px dotted var(--dot);
     font-size: 13.5px;
     color: var(--muted);
   }
-  footer .shop-name {
+  .next-off b {
     color: var(--ink);
     font-weight: 700;
-    font-size: 14.5px;
-    margin-bottom: 2px;
   }
-
-  .placeholder-note {
-    text-align: center;
+  .off-note {
+    margin: 6px 0 0;
     font-size: 12px;
     color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* ---------- アクセス ---------- */
+  .map-box {
+    height: 150px;
+    background:
+      repeating-linear-gradient(0deg, #E9E6DC 0 1px, transparent 1px 24px),
+      repeating-linear-gradient(90deg, #E9E6DC 0 1px, transparent 1px 24px),
+      #F4F2EA;
+    border: 1px solid var(--line);
+    position: relative;
+  }
+  .map-pin {
+    position: absolute;
+    left: 50%;
+    top: 47%;
+    transform: translate(-50%, -50%);
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--navy);
+    border: 3px solid var(--gold);
+  }
+  .address {
+    margin: 12px 0 0;
+    font-size: 14.5px;
+    line-height: 1.7;
+  }
+  .address .near {
+    display: block;
+    font-size: 12.5px;
+    color: var(--muted);
+  }
+  .map-note {
+    margin: 10px 0 0;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  /* ---------- 豆知識 ---------- */
+  .tips {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .tip {
+    background: var(--tip-bg);
+    border: 1px solid var(--tip-line);
+    padding: 12px 14px;
+  }
+  .tip h3 {
+    margin: 0 0 3px;
+    font-family: "Zen Kaku Gothic New", "Noto Sans JP", sans-serif;
+    font-size: 14px;
+    font-weight: 900;
+    letter-spacing: 0.02em;
+  }
+  .tip p {
+    margin: 0;
+    font-size: 13px;
+    color: #3D4A55;
     line-height: 1.7;
   }
 
-  @media (min-width: 520px) {
-    .page { max-width: 480px; padding-top: 40px; }
-    h1 { font-size: 34px; }
+  /* ---------- フッター ---------- */
+  footer {
+    padding: 20px 20px 34px;
+    font-size: 12.5px;
+    color: var(--muted);
+    line-height: 1.8;
+    background: var(--paper);
   }
-
-  @media (prefers-reduced-motion: reduce) {
-    * { transition: none !important; }
+  footer .name {
+    display: block;
+    font-family: "Zen Kaku Gothic New", "Noto Sans JP", sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--ink);
+    margin-bottom: 2px;
+  }
+  footer .tel {
+    font-family: "Roboto Mono", monospace;
+    letter-spacing: 0.02em;
+  }
+  .draft-note {
+    margin: 14px 0 0;
+    padding-top: 12px;
+    border-top: 1px dotted var(--dot);
+    font-size: 11.5px;
+    line-height: 1.6;
   }
 </style>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@500;700;900&family=Noto+Sans+JP:wght@400;500;700&display=swap">
 </head>
 <body>
 
 <div class="page">
 
-  <header class="hero">
-    <p class="eyebrow">Bicycle Shop</p>
-    <h1>〇〇サイクル</h1>
-    <p class="tagline">町の自転車屋、〇〇サイクルです。新車・中古車から修理・点検まで、お気軽にどうぞ。</p>
+  <header class="board" id="board" data-state="open">
+    <p class="shop-name">〇〇サイクル</p>
+    <p class="board-en" id="boardEn">OPEN</p>
+    <p class="board-label" id="boardLabel">営業中</p>
+    <p class="board-detail" id="boardDetail">本日 <b>18:30</b> まで</p>
+    <p class="board-clock" id="boardClock">14:32 現在</p>
   </header>
 
-  <section class="status-card" id="statusCard" data-state="open">
-    <p class="status-clock" id="statusClock">14:32 現在</p>
-    <div class="status-headline">
-      <span class="status-dot" aria-hidden="true"></span>
-      <span class="status-label" id="statusLabel">営業中</span>
-    </div>
-    <p class="status-detail" id="statusDetail">本日 9:00〜18:30 で営業しています</p>
-  </section>
-
-  <section class="card">
+  <section class="sec">
     <h2>営業時間</h2>
-    <table class="hours">
-      <tbody id="hoursTable">
-        <tr data-off="true"><td>月</td><td>定休日</td></tr>
-        <tr><td>火</td><td>9:00〜18:30</td></tr>
-        <tr><td>水</td><td>9:00〜18:30</td></tr>
-        <tr><td>木</td><td>9:00〜18:30</td></tr>
-        <tr><td>金</td><td>9:00〜18:30</td></tr>
-        <tr><td>土</td><td>9:00〜18:30</td></tr>
-        <tr><td>日</td><td>9:00〜18:30</td></tr>
-      </tbody>
-    </table>
-    <p class="hours-note">定休日:毎週月曜日・第1、第2日曜日</p>
+    <p class="hours-main">9:00 – 18:30</p>
+    <p class="hours-sub">曜日による違いはありません</p>
   </section>
 
-  <section class="card">
+  <section class="sec">
+    <h2>定休日</h2>
+    <ul class="off-list">
+      <li class="off-item">
+        <span class="off-tag">毎週</span>
+        <span class="off-text">月曜日</span>
+      </li>
+      <li class="off-item">
+        <span class="off-tag">毎月</span>
+        <span class="off-text">第1・第3日曜日</span>
+      </li>
+    </ul>
+    <p class="next-off">次のお休みは <b id="nextOff">9月7日（月）</b></p>
+    <p class="off-note">祝日は通常どおり営業しています。臨時休業の際は店頭にてお知らせします。</p>
+  </section>
+
+  <section class="sec">
     <h2>アクセス</h2>
-    <div class="map-box">
-      <svg width="30" height="38" viewBox="0 0 30 38" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M15 1C7.3 1 1 7.3 1 15c0 10.5 14 22 14 22s14-11.5 14-22c0-7.7-6.3-14-14-14z" stroke="currentColor" stroke-width="2"/>
-        <circle cx="15" cy="15" r="5" stroke="currentColor" stroke-width="2"/>
-      </svg>
-      <p class="map-address">〇〇県〇〇市〇〇町0-0-0</p>
-    </div>
-    <p class="map-note">※ 住所が決まりましたら、実際の地図をここに埋め込みます</p>
+    <div class="map-box"><span class="map-pin"></span></div>
+    <p class="address">
+      〇〇県〇〇市〇〇町 0-0-0
+      <span class="near">〇〇駅から徒歩5分／店前に駐輪スペースあり</span>
+    </p>
+    <p class="map-note">※ 住所が決まりましたら、実際の地図をここに差し替えます。</p>
   </section>
 
-  <section class="tips-section">
+  <section class="sec">
     <h2>お店からの豆知識</h2>
-    <div class="tips-grid">
-      <article class="tip-card">
-        <span class="tip-tag">空気圧</span>
-        <p class="tip-text">タイヤの空気は月1回のチェックがおすすめです。指で軽く押してへこみが少なければOK、柔らかいとパンクの原因になります。</p>
+    <div class="tips">
+      <article class="tip">
+        <h3>空気は月に1度</h3>
+        <p>指で押してへこむなら入れどきです。空気不足はパンクのいちばんの原因なので、月1回のチェックをおすすめします。</p>
       </article>
-      <article class="tip-card">
-        <span class="tip-tag">チェーン</span>
-        <p class="tip-text">チェーンの異音やサビは注油で防げます。乾いた布で汚れを拭き取ってから、油を薄くさすのがコツです。</p>
+      <article class="tip">
+        <h3>チェーンは拭いてから油</h3>
+        <p>汚れの上から油を差すと、かえって傷みます。乾いた布で汚れを拭き取ってから、薄くさすのがコツです。</p>
       </article>
-      <article class="tip-card">
-        <span class="tip-tag">保管</span>
-        <p class="tip-text">屋外に置きっぱなしだとサビや劣化が早まります。カバーを掛けるだけでも寿命がぐっと延びますよ。</p>
+      <article class="tip">
+        <h3>屋根の下に置くだけで長持ち</h3>
+        <p>屋外に置きっぱなしだとサビや劣化が早まります。カバーを掛けるだけでも寿命がぐっと延びますよ。</p>
       </article>
     </div>
   </section>
 
   <footer>
-    <p class="shop-name">〇〇サイクル</p>
-    <p>〇〇県〇〇市〇〇町0-0-0</p>
-    <p>TEL 000-0000-0000</p>
+    <span class="name">〇〇サイクル</span>
+    〇〇県〇〇市〇〇町 0-0-0<br>
+    TEL <span class="tel">000-0000-0000</span>
+    <p class="draft-note">この画面は見た目確認用のサンプルです。店名・住所・電話番号・豆知識は後ほど差し替えます。</p>
   </footer>
-
-  <p class="placeholder-note">この画面は見た目確認用のサンプルです。店名・住所・豆知識などは後ほど差し替えます。</p>
 
 </div>
 
 <script>
   (function () {
-    var OPEN_START = 9 * 60;
-    var OPEN_END = 18 * 60 + 30;
+    // ===== 営業時間の設定（ここだけ直せば全体に反映されます） =====
+    var OPEN_HOUR = 9,  OPEN_MIN = 0;    // 開店 9:00
+    var CLOSE_HOUR = 18, CLOSE_MIN = 30; // 閉店 18:30
+    var WEEKLY_OFF_DAY = 1;              // 毎週の定休日（0=日, 1=月 …）
+    var SUNDAY_OFF_WEEKS = [1, 3];       // 定休となる日曜（第1・第3）
+    // ==========================================================
+
+    var OPEN_MINUTES = OPEN_HOUR * 60 + OPEN_MIN;
+    var CLOSE_MINUTES = CLOSE_HOUR * 60 + CLOSE_MIN;
+    var DAY_JP = ["日", "月", "火", "水", "木", "金", "土"];
 
     function pad(n) { return String(n).padStart(2, "0"); }
 
+    function nthWeek(date) { return Math.ceil(date.getDate() / 7); }
+
+    function isHoliday(date) {
+      if (date.getDay() === WEEKLY_OFF_DAY) return true;
+      if (date.getDay() === 0 && SUNDAY_OFF_WEEKS.indexOf(nthWeek(date)) !== -1) return true;
+      return false;
+    }
+
+    function holidayReason(date) {
+      if (date.getDay() === WEEKLY_OFF_DAY) return "毎週" + DAY_JP[WEEKLY_OFF_DAY] + "曜日は定休日です";
+      return "第" + nthWeek(date) + "日曜日は定休日です";
+    }
+
+    // 明日以降で最初に来る定休日を返す
+    function nextHoliday(from) {
+      var d = new Date(from.getFullYear(), from.getMonth(), from.getDate() + 1);
+      for (var i = 0; i < 40; i++) {
+        if (isHoliday(d)) return d;
+        d.setDate(d.getDate() + 1);
+      }
+      return null;
+    }
+
+    function formatDate(d) {
+      return (d.getMonth() + 1) + "月" + d.getDate() + "日（" + DAY_JP[d.getDay()] + "）";
+    }
+
+    function remainText(minutes) {
+      var h = Math.floor(minutes / 60);
+      var m = minutes % 60;
+      if (h > 0 && m > 0) return "あと " + h + "時間" + m + "分";
+      if (h > 0) return "あと " + h + "時間";
+      return "あと " + m + "分";
+    }
+
     function computeStatus(now) {
-      var day = now.getDay(); // 0 Sun ... 6 Sat
       var minutesNow = now.getHours() * 60 + now.getMinutes();
-      var closedReason = null;
 
-      if (day === 1) {
-        closedReason = "定休日(月曜日)です";
-      } else if (day === 0) {
-        var nth = Math.ceil(now.getDate() / 7);
-        if (nth === 1 || nth === 2) {
-          closedReason = "定休日(第" + nth + "日曜日)です";
-        }
+      if (isHoliday(now)) {
+        return {
+          state: "closed",
+          en: "CLOSED",
+          label: "本日定休日",
+          detail: holidayReason(now)
+        };
       }
-
-      if (closedReason) {
-        return { state: "closed", label: "本日定休日", detail: closedReason };
+      if (minutesNow < OPEN_MINUTES) {
+        return {
+          state: "offhours",
+          en: "CLOSED",
+          label: "開店前",
+          detail: "本日は <b>" + OPEN_HOUR + ":" + pad(OPEN_MIN) + "</b> に開店します"
+        };
       }
-      if (minutesNow < OPEN_START) {
-        return { state: "offhours", label: "営業時間外", detail: "本日 9:00 に開店します" };
+      if (minutesNow >= CLOSE_MINUTES) {
+        return {
+          state: "offhours",
+          en: "CLOSED",
+          label: "本日終了",
+          detail: "本日の営業は終了しました"
+        };
       }
-      if (minutesNow >= OPEN_END) {
-        return { state: "offhours", label: "営業時間外", detail: "本日の営業は終了しました" };
-      }
-      return { state: "open", label: "営業中", detail: "本日 9:00〜18:30 で営業しています" };
+      return {
+        state: "open",
+        en: "OPEN",
+        label: "営業中",
+        detail: "本日 <b>" + CLOSE_HOUR + ":" + pad(CLOSE_MIN) + "</b> まで・" + remainText(CLOSE_MINUTES - minutesNow)
+      };
     }
 
     function render() {
       var now = new Date();
       var status = computeStatus(now);
-      var card = document.getElementById("statusCard");
-      card.setAttribute("data-state", status.state);
-      document.getElementById("statusLabel").textContent = status.label;
-      document.getElementById("statusDetail").textContent = status.detail;
-      document.getElementById("statusClock").textContent = pad(now.getHours()) + ":" + pad(now.getMinutes()) + " 現在";
 
-      var dayIndex = now.getDay(); // 0 Sun .. 6 Sat, table rows order Mon..Sun
-      var rowOrder = [1, 2, 3, 4, 5, 6, 0];
-      var rows = document.querySelectorAll("#hoursTable tr");
-      rows.forEach(function (row, i) {
-        row.style.fontWeight = rowOrder[i] === dayIndex ? "700" : "400";
-      });
+      document.getElementById("board").setAttribute("data-state", status.state);
+      document.getElementById("boardEn").textContent = status.en;
+      document.getElementById("boardLabel").textContent = status.label;
+      document.getElementById("boardDetail").innerHTML = status.detail;
+      document.getElementById("boardClock").textContent =
+        pad(now.getHours()) + ":" + pad(now.getMinutes()) + " 現在";
+
+      var next = nextHoliday(now);
+      if (next) {
+        document.getElementById("nextOff").textContent = formatDate(next);
+      }
     }
 
     render();
-    setInterval(render, 15000);
+    setInterval(render, 30000);
   })();
 </script>
 </body>
