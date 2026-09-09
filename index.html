@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>〇〇サイクル | 自転車店の営業案内</title>
-<meta name="description" content="〇〇サイクルの営業状況・営業時間・定休日・アクセス・豆知識のご案内ページです。">
+<title>サイクルショップすぎもと | 足立区伊興の自転車店</title>
+<meta name="description" content="東京都足立区伊興のサイクルショップすぎもと。営業時間は9:00〜18:30、定休日は毎週月曜日と第1・第3日曜日。営業中かどうかがひと目でわかります。">
 <meta name="theme-color" content="#123047">
 <meta name="color-scheme" content="light">
 
@@ -50,69 +50,101 @@
 
   /* ---------- 看板（営業状態） ---------- */
   .board {
+    position: relative;
     background: var(--navy);
     color: #FFFFFF;
-    padding: 22px 20px 26px;
-    border-bottom: 4px solid var(--gold);
+    padding: 34px 22px 30px;
+    border-bottom: 7px solid var(--gold);
     text-align: center;
+    min-height: min(58vh, 440px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  /* ホーロー看板の内枠 */
+  .board::before {
+    content: "";
+    position: absolute;
+    inset: 11px;
+    border: 1px solid rgba(242, 183, 5, 0.34);
+    pointer-events: none;
   }
   .board[data-state="offhours"],
   .board[data-state="closed"] {
     background: var(--charcoal);
     border-bottom-color: var(--charcoal-line);
   }
+  .board[data-state="offhours"]::before,
+  .board[data-state="closed"]::before {
+    border-color: rgba(255, 255, 255, 0.22);
+  }
 
   .shop-name {
     margin: 0;
     font-family: "Zen Kaku Gothic New", "Noto Sans JP", sans-serif;
     font-weight: 700;
-    font-size: 15px;
-    letter-spacing: 0.12em;
+    font-size: 17px;
+    letter-spacing: 0.16em;
+    text-indent: 0.16em;
     color: var(--gold);
+  }
+  .shop-sub {
+    margin: 6px 0 0;
+    font-size: 11.5px;
+    letter-spacing: 0.08em;
+    color: rgba(255, 255, 255, 0.6);
   }
   .board[data-state="offhours"] .shop-name,
   .board[data-state="closed"] .shop-name { color: #D7DCE1; }
 
   .board-en {
-    margin: 18px 0 0;
+    margin: 30px 0 0;
     font-family: "Roboto Mono", monospace;
-    font-size: 11px;
+    font-size: 13px;
     font-weight: 700;
-    letter-spacing: 0.34em;
-    text-indent: 0.34em;
-    opacity: 0.72;
+    letter-spacing: 0.42em;
+    text-indent: 0.42em;
+    color: var(--gold);
   }
+  .board[data-state="offhours"] .board-en,
+  .board[data-state="closed"] .board-en { color: rgba(255, 255, 255, 0.62); }
 
   .board-label {
-    margin: 2px 0 0;
+    margin: 4px 0 0;
     font-family: "Zen Kaku Gothic New", "Noto Sans JP", sans-serif;
     font-weight: 900;
-    font-size: 44px;
-    line-height: 1.1;
-    letter-spacing: 0.04em;
-    text-indent: 0.04em;
+    font-size: clamp(48px, 17vw, 68px);
+    line-height: 1.08;
+    letter-spacing: 0.02em;
+    text-indent: 0.02em;
+    white-space: nowrap;
   }
 
   .board-detail {
-    margin: 10px 0 0;
-    font-size: 13.5px;
-    color: #CFE0EC;
+    margin: 26px -11px 0;
+    padding: 11px 16px;
+    background: rgba(255, 255, 255, 0.09);
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+    font-size: 15px;
+    color: #DCE8F1;
     line-height: 1.6;
   }
   .board[data-state="offhours"] .board-detail,
-  .board[data-state="closed"] .board-detail { color: #C4CAD1; }
+  .board[data-state="closed"] .board-detail { color: #D2D7DC; }
   .board-detail b {
     font-family: "Roboto Mono", monospace;
     font-weight: 700;
+    font-size: 17px;
     color: #FFFFFF;
   }
 
   .board-clock {
-    margin: 12px 0 0;
+    margin: 14px 0 0;
     font-family: "Roboto Mono", monospace;
-    font-size: 11px;
+    font-size: 11.5px;
     letter-spacing: 0.08em;
-    opacity: 0.6;
+    opacity: 0.55;
   }
 
   /* ---------- セクション共通 ---------- */
@@ -296,7 +328,7 @@
 <div class="page">
 
   <header class="board" id="board" data-state="open">
-    <p class="shop-name">〇〇サイクル</p>
+    <p class="shop-name">サイクルショップすぎもと</p>
     <p class="board-en" id="boardEn">OPEN</p>
     <p class="board-label" id="boardLabel">営業中</p>
     <p class="board-detail" id="boardDetail">本日 <b>18:30</b> まで</p>
@@ -306,7 +338,6 @@
   <section class="sec">
     <h2>営業時間</h2>
     <p class="hours-main">9:00 – 18:30</p>
-    <p class="hours-sub">曜日による違いはありません</p>
   </section>
 
   <section class="sec">
@@ -322,17 +353,15 @@
       </li>
     </ul>
     <p class="next-off">次のお休みは <b id="nextOff">9月7日（月）</b></p>
-    <p class="off-note">祝日は通常どおり営業しています。臨時休業の際は店頭にてお知らせします。</p>
+    <p class="off-note">祝日は通常どおり営業しています。</p>
   </section>
 
   <section class="sec">
     <h2>アクセス</h2>
     <div class="map-box"><span class="map-pin"></span></div>
     <p class="address">
-      〇〇県〇〇市〇〇町 0-0-0
-      <span class="near">〇〇駅から徒歩5分／店前に駐輪スペースあり</span>
+      東京都足立区伊興 4-1-23
     </p>
-    <p class="map-note">※ 住所が決まりましたら、実際の地図をここに差し替えます。</p>
   </section>
 
   <section class="sec">
@@ -354,10 +383,8 @@
   </section>
 
   <footer>
-    <span class="name">〇〇サイクル</span>
-    〇〇県〇〇市〇〇町 0-0-0<br>
-    TEL <span class="tel">000-0000-0000</span>
-    <p class="draft-note">この画面は見た目確認用のサンプルです。店名・住所・電話番号・豆知識は後ほど差し替えます。</p>
+    <span class="name">サイクルショップすぎもと</span>
+    東京都足立区伊興 4-1-23
   </footer>
 
 </div>
@@ -386,8 +413,8 @@
     }
 
     function holidayReason(date) {
-      if (date.getDay() === WEEKLY_OFF_DAY) return "毎週" + DAY_JP[WEEKLY_OFF_DAY] + "曜日は定休日です";
-      return "第" + nthWeek(date) + "日曜日は定休日です";
+      if (date.getDay() === WEEKLY_OFF_DAY) return "毎週" + DAY_JP[WEEKLY_OFF_DAY] + "曜日";
+      return "第" + nthWeek(date) + "日曜日";
     }
 
     // 明日以降で最初に来る定休日を返す
@@ -419,8 +446,8 @@
         return {
           state: "closed",
           en: "CLOSED",
-          label: "本日定休日",
-          detail: holidayReason(now)
+          label: "定休日",
+          detail: "本日はお休みです（" + holidayReason(now) + "）"
         };
       }
       if (minutesNow < OPEN_MINUTES) {
