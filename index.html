@@ -113,11 +113,15 @@
     margin: 4px 0 0;
     font-family: "Zen Kaku Gothic New", "Noto Sans JP", sans-serif;
     font-weight: 900;
-    font-size: clamp(48px, 17vw, 68px);
+    font-size: clamp(64px, 24vw, 104px);   /* 3文字（営業中・開店前・定休日） */
     line-height: 1.08;
     letter-spacing: 0.02em;
     text-indent: 0.02em;
     white-space: nowrap;
+  }
+  /* 4文字（臨時休業・本日終了）は画面からはみ出さないよう少し小さく */
+  .board-label[data-len="4"] {
+    font-size: clamp(56px, 19vw, 84px);
   }
 
   .board-detail {
@@ -590,6 +594,7 @@
       document.getElementById("board").setAttribute("data-state", status.state);
       document.getElementById("boardEn").textContent = status.en;
       document.getElementById("boardLabel").textContent = status.label;
+      document.getElementById("boardLabel").setAttribute("data-len", status.label.length);
       document.getElementById("boardDetail").innerHTML = status.detail;
       document.getElementById("boardClock").textContent =
         pad(now.getHours()) + ":" + pad(now.getMinutes()) + " 現在";
